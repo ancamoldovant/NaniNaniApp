@@ -7,9 +7,8 @@
 <body>
 <h1>Optimal sleep schedule</h1>
 
-
-    <form method="post" action="/NaniNani/add">
-        <input type="text" name="child_name" placeholder="Child name">
+    <form method="post" th:action="@{/children/add}">
+        <input type="text" name="name" placeholder="Child name">
         <input type="date" name="dateOfBirth" max="2022-11-19">
         <input type="submit" value="Show the optimal sleep schedule">
     </form>
