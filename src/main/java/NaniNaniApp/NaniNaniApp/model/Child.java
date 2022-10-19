@@ -11,6 +11,7 @@ import java.util.UUID;
 @Entity
 public class Child {
 @Id
+@Column(name = "child_id")
     private UUID id;
 
     private String name;

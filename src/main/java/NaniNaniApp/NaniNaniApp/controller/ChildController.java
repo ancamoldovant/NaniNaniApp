@@ -1,7 +1,10 @@
 package NaniNaniApp.NaniNaniApp.controller;
 
 import NaniNaniApp.NaniNaniApp.model.Child;
+import NaniNaniApp.NaniNaniApp.model.ChildWithSleepSchedule;
+import NaniNaniApp.NaniNaniApp.model.OptimalSleepSchedule;
 import NaniNaniApp.NaniNaniApp.repo.JpaChildRepository;
+import NaniNaniApp.NaniNaniApp.repo.JpaChildWithSleepScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,13 +25,22 @@ import java.util.UUID;
 public class ChildController {
     @Autowired
     public JpaChildRepository jpaChildRepository;
+    @Autowired
+    public JpaChildWithSleepScheduleRepository jpaChildWithSleepScheduleRepository;
     @GetMapping("/")
     public String naniNaniHomepage(){
         return "children/home";
     }
     @GetMapping (value ={"/list"})
     public String optimalSleepSchedule(Model model){
-        model.addAttribute("children", jpaChildRepository.findAll());
+        List<Child> allChildren = jpaChildRepository.findAll();
+        List<ChildWithSleepSchedule> childrenWithSleepSchedule = new ArrayList<>();
+        for (Child child : allChildren) {
+          OptimalSleepSchedule schedule = jpaChildWithSleepScheduleRepository.findByMonth(child.getMonths());
+          ChildWithSleepSchedule childWithSleepSchedule = new ChildWithSleepSchedule(child, schedule);
+          childrenWithSleepSchedule.add(childWithSleepSchedule);
+        }
+        model.addAttribute("childrenWithSleepSchedule", childrenWithSleepSchedule);
         return "children/list";
     }
 

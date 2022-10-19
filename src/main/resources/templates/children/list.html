@@ -22,10 +22,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="child, iter:${children}">
+        <tr th:each="childWithSleepSchedule, iter:${childrenWithSleepSchedule}">
             <th scope="row" th:text="${iter.index} + 1">1</th>
-            <td th:text="${child.name}"></td>
-            <td th:text="${child.months}"></td>
+            <td th:text="${childWithSleepSchedule.child.name}"></td>
+            <td th:text="${childWithSleepSchedule.optimalSleepSchedule.wakingPeriodMin}"></td>
         </tr>
         </tbody>
     </table>
