@@ -1,6 +1,9 @@
 package NaniNaniApp.NaniNaniApp.model;
 
+import java.time.LocalTime;
+
 public class ChildWithSleepSchedule {
+
     private Child child;
     private OptimalSleepSchedule optimalSleepSchedule;
 

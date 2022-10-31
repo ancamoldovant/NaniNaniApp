@@ -11,21 +11,37 @@
 </head>
 <body>
 <div class="container">
-    <h1>Optimal sleep schedule for .. </h1>
-    <p><span th:text="${OSSdd}"></span></p>
+    <h1>Optimal sleep schedule </h1>
     <table class="table table-striped">
+        <form>
+            <a th:href="@{/children/add/}">Add a child and find out your child's optimal sleep schedule</a>
+        </form>
         <thead>
         <tr>
-        <td>#</td>
-        <td>Name</td>
-        <td>Months</td>
+            <td>#</td>
+            <td>Name</td>
+            <td>Months</td>
+            <td>Waking period min</td>
+            <td>Waking period max</td>
+            <td>Day time naps min</td>
+            <td>Day time naps max</td>
+            <td>Total hours of sleep min</td>
+            <td>Total hours of sleep max</td>
         </tr>
         </thead>
         <tbody>
         <tr th:each="childWithSleepSchedule, iter:${childrenWithSleepSchedule}">
             <th scope="row" th:text="${iter.index} + 1">1</th>
             <td th:text="${childWithSleepSchedule.child.name}"></td>
+            <td th:text="${childWithSleepSchedule.child.getMonths}"></td>
             <td th:text="${childWithSleepSchedule.optimalSleepSchedule.wakingPeriodMin}"></td>
+            <td th:text="${childWithSleepSchedule.optimalSleepSchedule.wakingPeriodMax}"></td>
+            <td th:text="${childWithSleepSchedule.optimalSleepSchedule.dayTimeNapsMin}"></td>
+            <td th:text="${childWithSleepSchedule.optimalSleepSchedule.dayTimeNapsMax}"></td>
+            <td th:text="${childWithSleepSchedule.optimalSleepSchedule.totalHoursOfSleepMin}"></td>
+            <td th:text="${childWithSleepSchedule.optimalSleepSchedule.totalHoursOfSleepMax}"></td>
+            <td><a class="btn btn-outline-danger" th:href="@{/children/list/delete/{id}(id=${childWithSleepSchedule.child.id})}">delete</a></td>
+            <td><a class="btn btn-primary" th:href="@{/children/personalizedSleepSchedule/{id}(id=${childWithSleepSchedule.child.id})}">Personalized schedule</a></td>
         </tr>
         </tbody>
     </table>

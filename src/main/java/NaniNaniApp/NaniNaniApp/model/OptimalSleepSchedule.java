@@ -1,8 +1,10 @@
 package NaniNaniApp.NaniNaniApp.model;
 
 import javax.persistence.*;
-import java.util.Set;
 import java.util.UUID;
+
+import static java.lang.String.format;
+
 @Entity
 public class OptimalSleepSchedule {
     @Id
@@ -12,22 +14,22 @@ public class OptimalSleepSchedule {
        private int toMonth;
        private int wakingPeriodMin;
        private int wakingPeriodMax;
-       private int daytimeNapsMin;
-       private int daytimeNapsMax;
+       private int dayTimeNapsMin;
+       private int dayTimeNapsMax;
        private int totalHoursOfSleepMin;
        private int totalHoursOfSleepMax;
 
    // @OneToMany (mappedBy="optimalSleepSchedule")
   //  private Set<Child> childSet;
     public OptimalSleepSchedule(){}
-    public OptimalSleepSchedule(UUID id, int fromMonth, int toMonth, int wakingPeriodMin, int wakingPeriodMax, int daytimeNapsMin, int daytimeNapsMax, int totalHoursOfSleepMin, int totalHoursOfSleepMax) {
+    public OptimalSleepSchedule(UUID id, int fromMonth, int toMonth, int wakingPeriodMin, int wakingPeriodMax, int dayTimeNapsMin, int dayTimeNapsMax, int totalHoursOfSleepMin, int totalHoursOfSleepMax) {
         this.id = id;
         this.fromMonth = fromMonth;
         this.toMonth = toMonth;
         this.wakingPeriodMin = wakingPeriodMin;
         this.wakingPeriodMax = wakingPeriodMax;
-        this.daytimeNapsMin = daytimeNapsMin;
-        this.daytimeNapsMax = daytimeNapsMax;
+        this.dayTimeNapsMin = dayTimeNapsMin;
+        this.dayTimeNapsMax = dayTimeNapsMax;
         this.totalHoursOfSleepMin = totalHoursOfSleepMin;
         this.totalHoursOfSleepMax = totalHoursOfSleepMax;
     }
@@ -43,20 +45,29 @@ public class OptimalSleepSchedule {
         return toMonth;
     }
 
-    public int getWakingPeriodMin() {
-        return wakingPeriodMin;
+    public String getWakingPeriodMin() {
+        return timeMinAsString(wakingPeriodMin);
+    }
+    public String getWakingPeriodMax() {
+        return timeMaxAsString(wakingPeriodMax);
+    }
+    private String timeMinAsString(int wakingPeriodMin) {
+        int minutes = wakingPeriodMin / 60;
+        int seconds = wakingPeriodMin % 60;
+        return format("%02d:%02d", minutes, seconds);
+    }
+    private String timeMaxAsString(int wakingPeriodMax) {
+        int minutes = wakingPeriodMax / 60;
+        int seconds = wakingPeriodMax % 60;
+        return format("%02d:%02d", minutes, seconds);
     }
 
-    public int getWakingPeriodMax() {
-        return wakingPeriodMax;
+    public int getDayTimeNapsMin() {
+        return dayTimeNapsMin;
     }
 
-    public int getDaytimeNapsMin() {
-        return daytimeNapsMin;
-    }
-
-    public int getDaytimeNapsMax() {
-        return daytimeNapsMax;
+    public int getDayTimeNapsMax() {
+        return dayTimeNapsMax;
     }
 
     public int getTotalHoursOfSleepMin() {
@@ -83,12 +94,12 @@ public class OptimalSleepSchedule {
         this.wakingPeriodMax = wakingPeriodMax;
     }
 
-    public void setDaytimeNapsMin(int daytimeNapsMin) {
-        this.daytimeNapsMin = daytimeNapsMin;
+    public void setDayTimeNapsMin(int dayTimeNapsMin) {
+        this.dayTimeNapsMin = dayTimeNapsMin;
     }
 
-    public void setDaytimeNapsMax(int daytimeNapsMax) {
-        this.daytimeNapsMax = daytimeNapsMax;
+    public void setDayTimeNapsMax(int dayTimeNapsMax) {
+        this.dayTimeNapsMax = dayTimeNapsMax;
     }
 
     public void setTotalHoursOfSleepMin(int totalHoursOfSleepMin) {

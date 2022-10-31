@@ -1,10 +1,7 @@
 package NaniNaniApp.NaniNaniApp.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
@@ -18,6 +15,9 @@ public class Child {
     @Column(name = "dateOfBirth", columnDefinition = "DATE")
     private LocalDate dateOfBirth;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
    public Child(){
   }
 
@@ -50,6 +50,13 @@ public class Child {
 
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
+    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 
