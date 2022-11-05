@@ -8,17 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.text.AttributedString;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+
+import static java.lang.String.format;
 
 @Controller
 @RequestMapping("children")
@@ -31,6 +27,9 @@ public class ChildController {
     public JpaChildRepository jpaChildRepository;
     @Autowired
     public JpaChildWithSleepScheduleRepository jpaChildWithSleepScheduleRepository;
+
+    @Autowired
+    public JpaChildWithSleepScheduleRepository jpaChildWithPersonalizedSleepScheduleRepository;
 
     @GetMapping("/")
     public String naniNaniHomepage(Model model) {
@@ -73,13 +72,35 @@ public class ChildController {
         return new RedirectView("/children/list");
     }
     @GetMapping("/personalizedSleepSchedule/{id}")
-    public String personalizedSleepScheduleChild(Model model, @PathVariable("id") UUID childId) {
-
+    public String personalizedSleepScheduleChild(Model model, @PathVariable("id") UUID childId){
+        model.addAttribute("childId",  childId);
         return ("/children/personalizedSleepSchedule");
     }
+    @PostMapping("/personalizedSleepSchedule/{id}")
+    public String personalizedSleepScheduleChild2(Model model, @PathVariable("id") UUID childId,  @RequestParam String wakeUpTime){
+        Child child= jpaChildRepository.findById(childId).get();
+        OptimalSleepSchedule schedule = jpaChildWithSleepScheduleRepository.findByMonth(child.getMonths());
+        int nextSleepTime = schedule.getWakingPeriodMin() + convertWakeupTimeToInt(wakeUpTime);
+        model.addAttribute("childId",  childId);
+        model.addAttribute("nextSleepTime", convertNextSleepTimeToString(nextSleepTime));
+        return ("/children/personalizedSleepSchedule");
+    }
+     public int convertWakeupTimeToInt(String wakeUpTime){
+         String[] hourMin = wakeUpTime.split(":");
+         int hour = Integer.parseInt(hourMin[0]);
+         int min = Integer.parseInt(hourMin[1]);
+         int hoursInMin = hour * 60;
+         return hoursInMin + min;
+     }
+    public String convertNextSleepTimeToString(int nextSleepTime){
+        int minutes = nextSleepTime/60 ;
+        int seconds = nextSleepTime % 60;
+        return format("%02d:%02d", minutes, seconds);
+    }
     @PostMapping("/personalizedSleepSchedule")
-    public RedirectView getPersonalizedSleepSchedule(Model model, @RequestParam String morningWakeUp){
-        ChildWithPersonalizedSleepSchedule childPersonalized = new ChildWithPersonalizedSleepSchedule(LocalTime.parse(morningWakeUp));
+    public RedirectView getPersonalizedSleepSchedule(Model model, @RequestParam String wakeUpTime){
+        //ChildWithPersonalizedSleepSchedule childPersonalized = new ChildWithPersonalizedSleepSchedule(LocalTime.parse(wakeUpTime));
+        model.addAttribute("info", "Insert wakeup hour");
         return new RedirectView("/children/personalizedSleepSchedule");
     }
 

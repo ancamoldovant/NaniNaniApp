@@ -44,11 +44,13 @@ public class OptimalSleepSchedule {
     public int getToMonth() {
         return toMonth;
     }
-
-    public String getWakingPeriodMin() {
+    public int getWakingPeriodMin() {
+        return wakingPeriodMin;
+    }
+    public String getWakingPeriodMinAsString() {
         return timeMinAsString(wakingPeriodMin);
     }
-    public String getWakingPeriodMax() {
+    public String getWakingPeriodMaxAsString() {
         return timeMaxAsString(wakingPeriodMax);
     }
     private String timeMinAsString(int wakingPeriodMin) {

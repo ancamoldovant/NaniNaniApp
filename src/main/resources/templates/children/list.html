@@ -34,8 +34,8 @@
             <th scope="row" th:text="${iter.index} + 1">1</th>
             <td th:text="${childWithSleepSchedule.child.name}"></td>
             <td th:text="${childWithSleepSchedule.child.getMonths}"></td>
-            <td th:text="${childWithSleepSchedule.optimalSleepSchedule.wakingPeriodMin}"></td>
-            <td th:text="${childWithSleepSchedule.optimalSleepSchedule.wakingPeriodMax}"></td>
+            <td th:text="${childWithSleepSchedule.optimalSleepSchedule.getWakingPeriodMinAsString}"></td>
+            <td th:text="${childWithSleepSchedule.optimalSleepSchedule.wakingPeriodMaxAsString}"></td>
             <td th:text="${childWithSleepSchedule.optimalSleepSchedule.dayTimeNapsMin}"></td>
             <td th:text="${childWithSleepSchedule.optimalSleepSchedule.dayTimeNapsMax}"></td>
             <td th:text="${childWithSleepSchedule.optimalSleepSchedule.totalHoursOfSleepMin}"></td>
