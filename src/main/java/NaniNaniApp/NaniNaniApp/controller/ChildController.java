@@ -71,19 +71,41 @@ public class ChildController {
         jpaChildRepository.deleteById(childId);
         return new RedirectView("/children/list");
     }
-    @GetMapping("/personalizedSleepSchedule/{id}")
-    public String personalizedSleepScheduleChild(Model model, @PathVariable("id") UUID childId){
-        model.addAttribute("childId",  childId);
-        return ("/children/personalizedSleepSchedule");
+    @GetMapping("list/edit/{id}")
+    public String editChildForm(Model model, @PathVariable("id") UUID childId) {
+        Optional<Child> optionalChild = jpaChildRepository.findById(childId);
+        Child child = optionalChild.get();
+        model.addAttribute("child", child);
+        return "children/editForm";
     }
-    @PostMapping("/personalizedSleepSchedule/{id}")
-    public String personalizedSleepScheduleChild2(Model model, @PathVariable("id") UUID childId,  @RequestParam String wakeUpTime){
+    @PostMapping("/edit")
+    public RedirectView addChildren(Model model,
+                                    @RequestParam ("childId") UUID childId,
+                                    @RequestParam ("name") String updatedName,
+                                    @RequestParam ("dateOfBirth") String updatedDateOfBirth) {
+        Optional<Child> child = jpaChildRepository.findById(childId);
+        child.get().setName(updatedName);
+        child.get().setDateOfBirth(LocalDate.parse(updatedDateOfBirth));
+        jpaChildRepository.save(child.get());
+        return new RedirectView("/children/list/");
+    }
+
+    @GetMapping("/personalizedSleepSchedule/{id}/{name}")
+    public String personalizedSleepSchedule(Model model, @PathVariable("id") UUID childId, @PathVariable("name") String name){
+        model.addAttribute("info", "Insert wakeup hour");
+        model.addAttribute("childId", childId);
+        model.addAttribute("name", name);
+        return ("/children/personalizedSleepScheduleForm");
+    }
+    @PostMapping("/personalizedSleepSchedule/{id}/{name}")
+    public String personalizedSleepScheduleForm(Model model, @PathVariable("id") UUID childId, @PathVariable("name") String name, @RequestParam String wakeUpTime){
         Child child= jpaChildRepository.findById(childId).get();
         OptimalSleepSchedule schedule = jpaChildWithSleepScheduleRepository.findByMonth(child.getMonths());
         int nextSleepTime = schedule.getWakingPeriodMin() + convertWakeupTimeToInt(wakeUpTime);
-        model.addAttribute("childId",  childId);
+        model.addAttribute("info", "Insert next wakeup hour");
+        model.addAttribute("name", name);
         model.addAttribute("nextSleepTime", convertNextSleepTimeToString(nextSleepTime));
-        return ("/children/personalizedSleepSchedule");
+        return ("/children/personalizedSleepScheduleForm");
     }
      public int convertWakeupTimeToInt(String wakeUpTime){
          String[] hourMin = wakeUpTime.split(":");
@@ -97,12 +119,7 @@ public class ChildController {
         int seconds = nextSleepTime % 60;
         return format("%02d:%02d", minutes, seconds);
     }
-    @PostMapping("/personalizedSleepSchedule")
-    public RedirectView getPersonalizedSleepSchedule(Model model, @RequestParam String wakeUpTime){
-        //ChildWithPersonalizedSleepSchedule childPersonalized = new ChildWithPersonalizedSleepSchedule(LocalTime.parse(wakeUpTime));
-        model.addAttribute("info", "Insert wakeup hour");
-        return new RedirectView("/children/personalizedSleepSchedule");
-    }
+
 
 }
 

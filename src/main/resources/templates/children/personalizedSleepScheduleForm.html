@@ -12,10 +12,10 @@
 <body>
 <div class="container">
 
-    <h1 th:text="'Personalized sleep schedule for ' + ${childId}"> Personalized sleep schedule for </h1>
-
+    <h1 th:text="'Personalized sleep schedule for ' + ${name}"> Personalized sleep schedule for </h1>
+    <h1 th:text="${info}"> </h1>
     <table class="table table-striped">
-        <form method="post" th:action="@{/children/personalizedSleepSchedule/{id}(id=${childId})}">
+        <form method="post" th:action="@{/children/personalizedSleepSchedule/{id}/{name}(id=${childId}, name=${name})}">
             <input type="time" name="wakeUpTime" >
             <input type="submit" value="Next sleep">
         </form>

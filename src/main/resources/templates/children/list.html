@@ -27,6 +27,7 @@
             <td>Day time naps max</td>
             <td>Total hours of sleep min</td>
             <td>Total hours of sleep max</td>
+            <td>Action<td>
         </tr>
         </thead>
         <tbody>
@@ -35,13 +36,14 @@
             <td th:text="${childWithSleepSchedule.child.name}"></td>
             <td th:text="${childWithSleepSchedule.child.getMonths}"></td>
             <td th:text="${childWithSleepSchedule.optimalSleepSchedule.getWakingPeriodMinAsString}"></td>
-            <td th:text="${childWithSleepSchedule.optimalSleepSchedule.wakingPeriodMaxAsString}"></td>
+            <td th:text="${childWithSleepSchedule.optimalSleepSchedule.getWakingPeriodMaxAsString}"></td>
             <td th:text="${childWithSleepSchedule.optimalSleepSchedule.dayTimeNapsMin}"></td>
             <td th:text="${childWithSleepSchedule.optimalSleepSchedule.dayTimeNapsMax}"></td>
             <td th:text="${childWithSleepSchedule.optimalSleepSchedule.totalHoursOfSleepMin}"></td>
             <td th:text="${childWithSleepSchedule.optimalSleepSchedule.totalHoursOfSleepMax}"></td>
             <td><a class="btn btn-outline-danger" th:href="@{/children/list/delete/{id}(id=${childWithSleepSchedule.child.id})}">delete</a></td>
-            <td><a class="btn btn-primary" th:href="@{/children/personalizedSleepSchedule/{id}(id=${childWithSleepSchedule.child.id})}">Personalized schedule</a></td>
+            <td><a class="btn btn-outline-primary" th:href="@{/children/list/edit/{id}(id=${childWithSleepSchedule.child.id})}">edit</a></td>
+            <td><a class="btn btn-primary" th:href="@{/children/personalizedSleepSchedule/{id}/{name}(id=${childWithSleepSchedule.child.id}, name=${childWithSleepSchedule.child.name})}">Personalized schedule</a></td>
         </tr>
         </tbody>
     </table>

@@ -10,14 +10,27 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     </head>
     <meta charset="UTF-8">
-    <title>Add your child's name and date of birth</title>
+    <title> </title>
 <body>
-<h1>Add your child's name and date of birth</h1>
-
+<div class="container">
+  <div class="bg-success p-2" style="--bs-bg-opacity: .1;">
+      <br>
+<h1> <p class="fw-lighter">Add your child's name and date of birth and find out the optimal schedule</p> </h1><br>
     <form method="post" th:action="@{/children/add}">
-        <input type="text" name="name" placeholder="Child name">
-        <input type="date" name="dateOfBirth" min="2016-10-21" max = "2022-10-21">
-        <input type="submit" value="Show the optimal sleep schedule">
-        </form>
+        <div class="row g-3 ">
+        <div class="col-auto">
+           <input type="text" name="name" placeholder="Child name">
+        </div>
+            <div class="col-auto">
+            <input type="date" name="dateOfBirth" min="2016-10-21" max = "2022-10-21">
+            </div>
+            <div class="col-auto">
+         <button type="submit" class="btn btn-primary"> Add </button>
+            </div>
+        </div>
+    </form>
+
+</div>
+</div>
 </body>
 </html>
