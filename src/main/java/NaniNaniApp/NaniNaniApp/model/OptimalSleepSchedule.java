@@ -19,8 +19,6 @@ public class OptimalSleepSchedule {
        private int totalHoursOfSleepMin;
        private int totalHoursOfSleepMax;
 
-   // @OneToMany (mappedBy="optimalSleepSchedule")
-  //  private Set<Child> childSet;
     public OptimalSleepSchedule(){}
     public OptimalSleepSchedule(UUID id, int fromMonth, int toMonth, int wakingPeriodMin, int wakingPeriodMax, int dayTimeNapsMin, int dayTimeNapsMax, int totalHoursOfSleepMin, int totalHoursOfSleepMax) {
         this.id = id;

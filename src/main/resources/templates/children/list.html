@@ -9,13 +9,37 @@
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 </head>
+
 <body>
-<div class="container">
-    <h1>Optimal sleep schedule </h1>
-    <table class="table table-striped">
-        <form>
-            <a th:href="@{/children/add/}">Add a child and find out your child's optimal sleep schedule</a>
-        </form>
+<div class="container"><br>
+
+    <nav class="navbar bg-light px-3 mb-3">
+        <div class="nav nav-pills flex-column flex-sm-row">
+            <a class="flex-sm-fill text-sm-center nav-link active" aria-current="page"  th:href="@{/children/}"><strong>NaniNani</strong></a>
+        </div>
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/children/}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/children/list/}">List of children</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/children/add/}">Add a child</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Log out</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" th:href="@{/login}">Log out</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="p-3 mb-2 bg-primary" style="--bs-bg-opacity: .1;">
+        <h1><p class="fw-lighter" ><strong>Optimal sleep schedule</strong></p></h1>
+
+        <table class="table table-striped">
         <thead>
         <tr>
             <td>#</td>
@@ -27,7 +51,6 @@
             <td>Day time naps max</td>
             <td>Total hours of sleep min</td>
             <td>Total hours of sleep max</td>
-            <td>Action<td>
         </tr>
         </thead>
         <tbody>
@@ -42,11 +65,29 @@
             <td th:text="${childWithSleepSchedule.optimalSleepSchedule.totalHoursOfSleepMin}"></td>
             <td th:text="${childWithSleepSchedule.optimalSleepSchedule.totalHoursOfSleepMax}"></td>
             <td><a class="btn btn-outline-danger" th:href="@{/children/list/delete/{id}(id=${childWithSleepSchedule.child.id})}">delete</a></td>
-            <td><a class="btn btn-outline-primary" th:href="@{/children/list/edit/{id}(id=${childWithSleepSchedule.child.id})}">edit</a></td>
-            <td><a class="btn btn-primary" th:href="@{/children/personalizedSleepSchedule/{id}/{name}(id=${childWithSleepSchedule.child.id}, name=${childWithSleepSchedule.child.name})}">Personalized schedule</a></td>
+            <td><a class="btn btn-outline-primary" th:href="@{/children/list/edit/{id}(id=${childWithSleepSchedule.child.id})}">edit </a> </td>
+            <td><a class="btn btn-primary" th:href="@{/children/personalizedSleepSchedule/{id}/{name}(id=${childWithSleepSchedule.child.id}, name=${childWithSleepSchedule.child.name})}"> Sleep hour </a></td>
         </tr>
         </tbody>
     </table>
+    </div>
+
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h1 class="accordion-header" id="headingOne" >
+                <button  class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><strong>Read more</strong></button>
+            </h1>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <form th:each="infoSleepSchedule, iter:${infoSleepSchedule}">
+                        <h2 th:text="${infoSleepSchedule.title}"></h2>
+                        <p class="fw-lighter" th:text="${infoSleepSchedule.describingInfoSleepSchedule}"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 </body>
+</html>

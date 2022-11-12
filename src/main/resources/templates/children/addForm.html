@@ -12,24 +12,59 @@
     <meta charset="UTF-8">
     <title> </title>
 <body>
-<div class="container">
-  <div class="bg-success p-2" style="--bs-bg-opacity: .1;">
-      <br>
+
+<div class="container"><br>
+    <nav class="navbar bg-light px-3 mb-3">
+        <div class="nav nav-pills flex-column flex-sm-row">
+            <a class="flex-sm-fill text-sm-center nav-link active" aria-current="page"  th:href="@{/children/}"><strong>NaniNani</strong></a>
+        </div>
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/children/}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/children/list/}">List of children</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/children/add/}">Add a child</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Log out</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" th:href="@{/login}">Log out</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div class="p-3 mb-2 bg-info " style="--bs-bg-opacity: .1;">
+
 <h1> <p class="fw-lighter">Add your child's name and date of birth and find out the optimal schedule</p> </h1><br>
     <form method="post" th:action="@{/children/add}">
         <div class="row g-3 ">
-        <div class="col-auto">
-           <input type="text" name="name" placeholder="Child name">
-        </div>
             <div class="col-auto">
-            <input type="date" name="dateOfBirth" min="2016-10-21" max = "2022-10-21">
+                <label for="name" class="form-label">Name</label>
             </div>
             <div class="col-auto">
-         <button type="submit" class="btn btn-primary"> Add </button>
+                 <input type="text" name="name" placeholder="Child name" class="form-control" id="name" aria-describedby="name">
+            </div>
+            <div class="col-auto">
+                <div id="nameHelp" class="form-text"></div>
+            </div>
+
+            <div class="row g-3 ">
+                <div class="col-auto">
+                    <label for="dateOfBirth" class="form-label">Date of birth</label>
+                </div>
+                <div class="col-auto">
+                    <input type="date" name="dateOfBirth" min="2016-10-21" max = "2022-10-21"class="form-control" id="dateOfBirth" aria-describedby="dateOfBirth">
+                    <div id="dateOfBirthHelp" class="form-text">Choose a date between 2016-10-21 and today</div><br>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary"> Add </button>
+                </div><br>
             </div>
         </div>
     </form>
-
 </div>
 </div>
 </body>
