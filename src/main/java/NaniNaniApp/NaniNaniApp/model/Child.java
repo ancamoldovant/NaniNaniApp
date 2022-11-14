@@ -2,6 +2,7 @@ package NaniNaniApp.NaniNaniApp.model;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
@@ -12,6 +13,7 @@ public class Child {
     private UUID id;
 
     private String name;
+
     @Column(name = "dateOfBirth", columnDefinition = "DATE")
     private LocalDate dateOfBirth;
 
@@ -30,9 +32,7 @@ public class Child {
     public int getMonths() {
         return (int) ChronoUnit.MONTHS.between(dateOfBirth, LocalDate.now());
     }
-    public UUID getId() {
-        return id;
-    }
+
 
     public String getName() {
         return name;
@@ -40,9 +40,7 @@ public class Child {
     public void setName(String name) {
         this.name = name;
     }
-    public void setId(UUID id) {
-        this.id = id;
-    }
+
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;

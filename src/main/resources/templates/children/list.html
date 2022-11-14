@@ -19,7 +19,7 @@
         </div>
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/children/}">Home</a>
+               <a class="nav-link" th:href="@{/children/}">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/children/list/}">List of children</a>
@@ -37,33 +37,33 @@
     </nav>
 
     <div class="p-3 mb-2 bg-primary" style="--bs-bg-opacity: .1;">
-        <h1><p class="fw-lighter" ><strong>Optimal sleep schedule</strong></p></h1>
+        <h1><p class="fw-lighter"><b>Optimal sleep schedule</b></p></h1>
 
         <table class="table table-striped">
         <thead>
         <tr>
             <td>#</td>
-            <td>Name</td>
-            <td>Months</td>
-            <td>Waking period min</td>
-            <td>Waking period max</td>
-            <td>Day time naps min</td>
-            <td>Day time naps max</td>
-            <td>Total hours of sleep min</td>
-            <td>Total hours of sleep max</td>
+            <td class="fw-dark">Name</td>
+            <td class="fw-dark">Months</td>
+            <td class="fw-dark">Waking period min</td>
+            <td class="fw-dark">Waking period max</td>
+            <td class="fw-dark">Day time naps min</td>
+            <td class="fw-dark">Day time naps max</td>
+            <td class="fw-dark">Total hours of sleep min</td>
+            <td class="fw-dark">Total hours of sleep max</td>
         </tr>
         </thead>
         <tbody>
         <tr th:each="childWithSleepSchedule, iter:${childrenWithSleepSchedule}">
-            <th scope="row" th:text="${iter.index} + 1">1</th>
-            <td th:text="${childWithSleepSchedule.child.name}"></td>
-            <td th:text="${childWithSleepSchedule.child.getMonths}"></td>
-            <td th:text="${childWithSleepSchedule.optimalSleepSchedule.getWakingPeriodMinAsString}"></td>
-            <td th:text="${childWithSleepSchedule.optimalSleepSchedule.getWakingPeriodMaxAsString}"></td>
-            <td th:text="${childWithSleepSchedule.optimalSleepSchedule.dayTimeNapsMin}"></td>
-            <td th:text="${childWithSleepSchedule.optimalSleepSchedule.dayTimeNapsMax}"></td>
-            <td th:text="${childWithSleepSchedule.optimalSleepSchedule.totalHoursOfSleepMin}"></td>
-            <td th:text="${childWithSleepSchedule.optimalSleepSchedule.totalHoursOfSleepMax}"></td>
+            <th class="fw-lighter" scope="row" th:text="${iter.index} + 1">1</th>
+            <td class="fw-dark" th:text="${childWithSleepSchedule.child.name}"></td>
+            <td class="fw-lighter" th:text="${childWithSleepSchedule.child.getMonths}"></td>
+            <td class="fw-lighter" th:text="${childWithSleepSchedule.optimalSleepSchedule.getWakingPeriodMinAsString}"></td>
+            <td class="fw-lighter" th:text="${childWithSleepSchedule.optimalSleepSchedule.getWakingPeriodMaxAsString}"></td>
+            <td class="fw-lighter" th:text="${childWithSleepSchedule.optimalSleepSchedule.dayTimeNapsMin}"></td>
+            <td class="fw-lighter" th:text="${childWithSleepSchedule.optimalSleepSchedule.dayTimeNapsMax}"></td>
+            <td class="fw-lighter" th:text="${childWithSleepSchedule.optimalSleepSchedule.totalHoursOfSleepMin}"></td>
+            <td class="fw-lighter" th:text="${childWithSleepSchedule.optimalSleepSchedule.totalHoursOfSleepMax}"></td>
             <td><a class="btn btn-outline-danger" th:href="@{/children/list/delete/{id}(id=${childWithSleepSchedule.child.id})}">delete</a></td>
             <td><a class="btn btn-outline-primary" th:href="@{/children/list/edit/{id}(id=${childWithSleepSchedule.child.id})}">edit </a> </td>
             <td><a class="btn btn-primary" th:href="@{/children/personalizedSleepSchedule/{id}/{name}(id=${childWithSleepSchedule.child.id}, name=${childWithSleepSchedule.child.name})}"> Sleep hour </a></td>
@@ -80,8 +80,9 @@
             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                     <form th:each="infoSleepSchedule, iter:${infoSleepSchedule}">
-                        <h2 th:text="${infoSleepSchedule.title}"></h2>
-                        <p class="fw-lighter" th:text="${infoSleepSchedule.describingInfoSleepSchedule}"></p>
+                        <h3 class="fw-lighter" th:text="${infoSleepSchedule.fromMonth != null} ? ${infoSleepSchedule.title} : ''"></h3>
+                        <p class="fw-lighter" th:text="${infoSleepSchedule.fromMonth != null} ? ${infoSleepSchedule.describingInfoSleepSchedule} : '' "></p>
+
                     </form>
                 </div>
             </div>

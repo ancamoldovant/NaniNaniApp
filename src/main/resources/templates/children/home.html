@@ -33,9 +33,21 @@
             </li>
         </ul>
     </nav>
+    <div class="p-3 mb-2 bg-primary" style="--bs-bg-opacity: .1;">
 
-    <h1>Welcome to NaniNani</h1>
+        <h1><p class="fw-lighter-info">Welcome to NaniNani</p></h1>
+
+        <h4  th:each="infoSleepSchedule, iter:${infoSleepSchedule}">
+                <p class="fw-light" th:text="${infoSleepSchedule.describingInfoSleepSchedule}"></p>
+        </h4>
+
+        <h4>Do you want to find out the optimal schedule for your child? </h4>
+        <a class="btn btn-primary" th:href="@{/children/add/}" role="button">Yes</a>
+
+        <h4>If you already registered your child, check the sleep schedule and obtain the next sleep hour</h4>
+        <a class="btn btn-primary" th:href="@{/children/list/}" role="button">Next sleep hour</a>
+
+    </div>
 </div>
-
 </body>
 </html>

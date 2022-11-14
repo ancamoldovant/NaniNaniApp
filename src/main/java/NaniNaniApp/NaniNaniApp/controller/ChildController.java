@@ -5,13 +5,15 @@ import NaniNaniApp.NaniNaniApp.repo.JpaChildRepository;
 import NaniNaniApp.NaniNaniApp.repo.JpaChildWithSleepScheduleRepository;
 import NaniNaniApp.NaniNaniApp.repo.JpaInfoSleepScheduleRepository;
 import NaniNaniApp.NaniNaniApp.service.IAuthenticationFacade;
-import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+
 
 import java.time.LocalDate;
 import java.util.*;
@@ -20,6 +22,7 @@ import static java.lang.String.format;
 
 @Controller
 @RequestMapping("children")
+
 public class ChildController {
 
     @Autowired
@@ -31,20 +34,25 @@ public class ChildController {
     public JpaChildWithSleepScheduleRepository jpaChildWithSleepScheduleRepository;
 
     @Autowired
-    public JpaChildWithSleepScheduleRepository jpaChildWithPersonalizedSleepScheduleRepository;
-    @Autowired
     public JpaInfoSleepScheduleRepository jpaInfoSleepScheduleRepository;
 
     @GetMapping("/")
+    public String getNaniNaniHomepage(Model model) {
+        model.addAttribute("infoSleepSchedule", jpaInfoSleepScheduleRepository.findByTitle("About the application"));
+        return "children/home";
+    }
+    @PostMapping("/")
     public String naniNaniHomepage(Model model) {
+        model.addAttribute("infoSleepSchedule", jpaInfoSleepScheduleRepository.findByTitle("About the application"));
         return "children/home";
     }
 
     @GetMapping(value = {"/add"})
     public String addChildForm(Model model) {
+        LocalDate now = LocalDate.now();
+        model.addAttribute("now", now);
         return "children/addForm";
     }
-
     @PostMapping("/add")
     public RedirectView addChild(Model model,
                                  @RequestParam String name,
@@ -53,9 +61,8 @@ public class ChildController {
         Authentication authentication = authenticationFacade.getAuthentication();
         addedChild.setUser(((CustomUserDetails) authentication.getPrincipal()).getUser());
         jpaChildRepository.saveAndFlush(addedChild);
-        return new RedirectView("/children/list/");
+        return new RedirectView("/children/list/") ;
     }
-
     @GetMapping(value = {"/list"})
     public String optimalSleepSchedule(Model model) {
         Authentication authentication = authenticationFacade.getAuthentication();
@@ -67,8 +74,8 @@ public class ChildController {
             ChildWithSleepSchedule childWithSleepSchedule = new ChildWithSleepSchedule(child, schedule);
             childrenWithSleepSchedule.add(childWithSleepSchedule);
         }
-        model.addAttribute("infoSleepSchedule", jpaInfoSleepScheduleRepository.findAll());
         model.addAttribute("childrenWithSleepSchedule", childrenWithSleepSchedule);
+        model.addAttribute("infoSleepSchedule", jpaInfoSleepScheduleRepository.findAllByOrderByFromMonthAsc());
         return "children/list";
     }
     @GetMapping("list/delete/{id}")
@@ -96,10 +103,10 @@ public class ChildController {
     }
     @GetMapping("/personalizedSleepSchedule/{id}/{name}")
     public String personalizedSleepSchedule(Model model, @PathVariable("id") UUID childId, @PathVariable("name") String name){
-        model.addAttribute("info", "Insert the last wakeup hour of your child and you will find out the next hour for sleep");
+        model.addAttribute("info", "Insert the last wake up hour of your child and you will find out the next hour for sleep");
         model.addAttribute("childId", childId);
         model.addAttribute("name", name);
-        model.addAttribute("infoSleepSchedule", jpaInfoSleepScheduleRepository.findByTitle("Most important"));
+        model.addAttribute("infoSleepSchedule", jpaInfoSleepScheduleRepository.findByTitle("Is important"));
         return ("/children/personalizedSleepScheduleForm");
     }
     @PostMapping("/personalizedSleepSchedule/{id}/{name}")
@@ -107,10 +114,10 @@ public class ChildController {
         Child child= jpaChildRepository.findById(childId).get();
         OptimalSleepSchedule schedule = jpaChildWithSleepScheduleRepository.findByMonth(child.getMonths());
         int nextSleepTime = schedule.getWakingPeriodMin() + convertWakeupTimeToInt(wakeUpTime);
-        model.addAttribute("info", "Put your child to sleep 10-15 minutes earlier than the time he should fall asleep");
+        model.addAttribute("info", "It is recommended to wake up around 7 in the morning and go to bed in the evening between 7-8 pm");
         model.addAttribute("name", name);
         model.addAttribute("nextSleepTime", convertNextSleepTimeToString(nextSleepTime));
-        model.addAttribute("infoSleepSchedule", jpaInfoSleepScheduleRepository.findByTitle("Most important"));
+        model.addAttribute("infoSleepSchedule", jpaInfoSleepScheduleRepository.findByTitle("Is important"));
 
         return ("/children/personalizedSleepScheduleForm");
     }

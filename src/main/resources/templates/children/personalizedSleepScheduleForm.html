@@ -41,19 +41,19 @@
         <form method="post" th:action="@{/children/personalizedSleepSchedule/{id}/{name}(id=${childId}, name=${name})}">
             <div class="row g-3 ">
                 <div class="col-auto">
-                  <input type="time" name="wakeUpTime" class="form-control" id="wakeUpTime" aria-describedby="wakeUpTime" ><br>
+                  <input type="time" name="wakeUpTime" min="05:69" max="17:59" value="24:00"  class="form-control" id="wakeUpTime" aria-describedby="wakeUpTime" ><br>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Next sleep</button><br>
         </form>
     </table>
 
-          <div class="p-3 mb-2 bg-primary text-dark" style="--bs-bg-opacity: .3;">
-            <h3><b><p class="fw-lighter" th:text="'Hour of next sleep: ' + ${nextSleepTime}"></p></b></h3>
-          </div>
+         <div class="p-3 mb-2 bg-info " style="--bs-bg-opacity: .3;">
+               <h3 class="fw-lighter"> <b> Hour of next sleep</b> <span class="badge text-bg-info" th:text=" ${nextSleepTime != null} ?  ${nextSleepTime} : ''"></span> </h3>
+         </div>
 
-        <div class="p-3 mb-2 bg-warning " style="--bs-bg-opacity: .1;">
-        <h4><p class="fw-lighter"> <strong> Most important </strong></p></h4>
+        <div class="p-3 mb-2 bg-warning " style="--bs-bg-opacity: .2;">
+              <h4><p class="fw-lighter"> <strong> Most important </strong></p></h4>
         <table class="table table-striped">
             <thead>
             <tr>

@@ -1,5 +1,6 @@
 package NaniNaniApp.NaniNaniApp.model;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,20 +10,18 @@ public class InfoSleepSchedule {
     @Id
     @Column(name = "infoSleepSchedule_id")
     private UUID id;
-    private int fromMonth;
-    private int toMonth;
-
+    private Integer fromMonth;
+    private Integer toMonth;
     private String title;
     private String describingInfoSleepSchedule;
 
-    public InfoSleepSchedule(UUID id, int fromMonth, int toMonth, String title, String describingInfoSleepSchedule) {
+    public InfoSleepSchedule(UUID id, Integer fromMonth, Integer toMonth, String title, String describingInfoSleepSchedule) {
         this.id = id;
         this.fromMonth = fromMonth;
         this.toMonth = toMonth;
         this.title= title;
         this.describingInfoSleepSchedule= describingInfoSleepSchedule;
     }
-
     public InfoSleepSchedule() {
     }
 
@@ -30,7 +29,7 @@ public class InfoSleepSchedule {
         return id;
     }
 
-    public int getFromMonth() {
+    public Integer getFromMonth() {
         return fromMonth;
     }
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" >
+
     <head>
         <meta charset="UTF-8">
         <title>Add a child</title>
@@ -39,32 +40,33 @@
     <div class="p-3 mb-2 bg-info " style="--bs-bg-opacity: .1;">
 
 <h1> <p class="fw-lighter">Add your child's name and date of birth and find out the optimal schedule</p> </h1><br>
-    <form method="post" th:action="@{/children/add}">
-        <div class="row g-3 ">
-            <div class="col-auto">
-                <label for="name" class="form-label">Name</label>
-            </div>
-            <div class="col-auto">
-                 <input type="text" name="name" placeholder="Child name" class="form-control" id="name" aria-describedby="name">
-            </div>
-            <div class="col-auto">
-                <div id="nameHelp" class="form-text"></div>
-            </div>
 
+        <form method="post" th:action="@{/children/add}"  >
             <div class="row g-3 ">
                 <div class="col-auto">
-                    <label for="dateOfBirth" class="form-label">Date of birth</label>
+                    <label for="name" class="form-label">Name</label>
                 </div>
+                 <div class="col-auto">
+                    <input text="name" name="name" placeholder="Child name" class="form-control" id="name" aria-describedby="name">
+                 </div>
                 <div class="col-auto">
-                    <input type="date" name="dateOfBirth" min="2016-10-21" max = "2022-10-21"class="form-control" id="dateOfBirth" aria-describedby="dateOfBirth">
-                    <div id="dateOfBirthHelp" class="form-text">Choose a date between 2016-10-21 and today</div><br>
+                    <div id="nameHelp" class="form-text"></div>
                 </div>
-                <div class="col-auto">
-                    <button type="submit" class="btn btn-primary"> Add </button>
-                </div><br>
+
+                <div class="row g-3 ">
+                    <div class="col-auto">
+                        <label for="dateOfBirth" class="form-label">Date of birth</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="date" name="dateOfBirth" min="2016-10-21" th:attr="max=${now}" class="form-control" id="dateOfBirth" aria-describedby="dateOfBirth">
+                        <div id="dateOfBirthHelp" class="form-text">Choose a date between 2016-10-21 and today</div><br>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary"> Add </button>
+                    </div><br>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
 </div>
 </div>
 </body>
